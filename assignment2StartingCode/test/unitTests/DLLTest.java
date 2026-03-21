@@ -1,3 +1,4 @@
+
 package unitTests;
 
 import static org.junit.Assert.*;
@@ -14,16 +15,16 @@ import utilities.Iterator;
 
 /**
  * @author kitty, maryam
- * @version 3.2 Aug. 28, 2024  
+ * @version 3.2 Aug. 28, 2024   
  * Class Description:
- * Test for the array-based implementation of the ListADT defined in the CPRG304
+ * Test for the linked-list-based implementation of the ListADT defined in the CPRG304
  * Assignment 2.
  */
 
-public class ArrayListTest
+public class DLLTest
 {
 	// Attributes
-	private MyArrayList<Integer> myList;
+	private MyDLL<Integer> myList;
 	private Integer one;
 	private Integer two;
 	private Integer three;
@@ -31,13 +32,13 @@ public class ArrayListTest
 	private Integer five;
 
 	/**
-	 * Initializes a new MyArrayList instance and five Integer instances before each test.
+	 * Initializes a new MyDLL instance and five Integer instances before each test.
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception
 	{
-		myList = new MyArrayList<>();
+		myList = new MyDLL<>();
 		one = 1;
 		two = 2;
 		three = 3;
@@ -63,7 +64,7 @@ public class ArrayListTest
 
 
 	/**
-	 * Test method for constructor of MyArrayList class.
+	 * Test method for constructor of MyDLL class.
 	 */
 	@Test
 	public void testConstructor()
@@ -76,7 +77,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#add(int, java.lang.Object)}
+	 * {@link implementations.MyDLL#add(int, java.lang.Object)}
 	 * to add item to an empty list and return true.
 	 */
 	@Test
@@ -90,7 +91,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(int, java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(int, java.lang.Object)}
 	 * to add null to a list and throw NullPointerException.
 	 */
 	@Test
@@ -110,7 +111,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(int, java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(int, java.lang.Object)}
 	 * to add an item to a positive invalid index and throw IndexOutOfBoundsExceptionx.
 	 */
 	@Test
@@ -133,7 +134,7 @@ public class ArrayListTest
 	
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(int, java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(int, java.lang.Object)}
 	 * to add an item to a positive invalid index and throw IndexOutOfBoundsException.
 	 */
 	@Test
@@ -152,7 +153,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(java.lang.Object)}
 	 * to add an item to an empty list an position 0.
 	 */
 	@Test
@@ -170,7 +171,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(java.lang.Object)}
 	 * to add an item to the tail of the list.
 	 */
 	@Test
@@ -194,7 +195,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(java.lang.Object)}
 	 * to add an item to the head of the list.
 	 */
 	@Test
@@ -216,21 +217,20 @@ public class ArrayListTest
 			assertEquals( "Failed to add item to the correct position.", expectedValue, actualValue );
 		}
 	}
-
+	
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(java.lang.Object)} 
-	 * to add 100 items to the list (beyond default capacity of 10).
+	 * {@link implementations.MyDLLt#add(java.lang.Object)}
+	 * to add an item to the middle of the list.
 	 */
 	@Test
-	public void testAddE_ResizeArray()
+	public void testAddIntE_ItemAddedCorrectly_Middle()
 	{
-		int expectedSize = 100;
+		int expectedSize = 3;
 		
-		for( int i = 0; i < 100; i++ )
-		{
-			assertTrue(myList.add( i + 1 ));
-		}
+		assertTrue(myList.add( 0, one ));
+		assertTrue(myList.add( 1, three ));
+		assertTrue(myList.add( 1, two ));
 		
 		int actualSize = myList.size();
 		assertEquals( "Failed to update size", expectedSize, actualSize);
@@ -239,13 +239,13 @@ public class ArrayListTest
 		{
 			int expectedValue = i + 1;
 			int actualValue = myList.get( i );
-			assertEquals( "Failed to add to the correct position.", expectedValue, actualValue );
+			assertEquals( "Failed to add item to the correct position.", expectedValue, actualValue );
 		}
 	}
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(java.lang.Object)}
 	 * to add item to an empty list and return true.
 	 */
 	@Test
@@ -259,7 +259,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(int, java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(int, java.lang.Object)}
 	 * to add a null to a list and throw NullPointerException.
 	 */
 	@Test
@@ -278,7 +278,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(java.lang.Object)}
 	 * to add one item to empty list.
 	 */
 	@Test
@@ -296,7 +296,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#add(java.lang.Object)}
+	 * {@link implementations.MyDLLt#add(java.lang.Object)}
 	 * to add multiple items.
 	 */
 	@Test
@@ -320,7 +320,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#addAll(utilities.List)}
+	 * {@link implementations.MyDLLt#addAll(utilities.List)}
 	 * to add an ArrayList to the list.
 	 */
 	@Test
@@ -352,7 +352,7 @@ public class ArrayListTest
 	
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#addAll(utilities.List)}
+	 * {@link implementations.MyDLLt#addAll(utilities.List)}
 	 * to add a DLL to the list.
 	 */
 	@Test
@@ -384,7 +384,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#addAll(utilities.List)}
+	 * {@link implementations.MyDLLt#addAll(utilities.List)}
 	 * to add a null to the list to throw a NullPointerException.
 	 */
 	@Test
@@ -405,7 +405,7 @@ public class ArrayListTest
 	}
 
 	/**
-	 * Test method for {@link implementations.MyArrayList#clear()}
+	 * Test method for {@link implementations.MyDLLt#clear()}
 	 * to clear a non-empty list.
 	 */
 	@Test
@@ -425,7 +425,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#contains(java.lang.Object)}
+	 * {@link implementations.MyDLLt#contains(java.lang.Object)}
 	 * to check for the existence of an item and return true.
 	 */
 	@Test
@@ -442,7 +442,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#contains(java.lang.Object)}
+	 * {@link implementations.MyDLLt#contains(java.lang.Object)}
 	 * to check for the existence of an item and return false.
 	 */
 	@Test
@@ -459,7 +459,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#contains(java.lang.Object)}
+	 * {@link implementations.MyDLLt#contains(java.lang.Object)}
 	 * to pass a null item and throw NullPointerException.
 	 */
 	@Test
@@ -478,7 +478,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#get(int)}
+	 * {@link implementations.MyDLLt#get(int)}
 	 * to return the only item in list.
 	 */
 	@Test
@@ -494,7 +494,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#get(int)}
+	 * {@link implementations.MyDLLt#get(int)}
 	 * to get the first item in the list.
 	 */
 	@Test
@@ -512,7 +512,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#get(int)}
+	 * {@link implementations.MyDLLt#get(int)}
 	 * to get the last item in the list. 
 	 */
 	@Test
@@ -530,7 +530,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#get(int)}
+	 * {@link implementations.MyDLLt#get(int)}
 	 * to get the middle item in the list.
 	 */
 	@Test
@@ -549,7 +549,7 @@ public class ArrayListTest
 	
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#get(int)}
+	 * {@link implementations.MyDLLt#get(int)}
 	 * to get an item in position 0 of an empty list and throw an IndexOutOfBoundsException.
 	 */
 	@Test
@@ -568,7 +568,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#get(int)}
+	 * {@link implementations.MyDLLt#get(int)}
 	 * to throw an IndexOutOfBoundsException when getting from an invalid positive index.
 	 */
 	@Test
@@ -591,7 +591,7 @@ public class ArrayListTest
 	
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#get(int)}
+	 * {@link implementations.MyDLLt#get(int)}
 	 * to throw an IndexOutOfBoundsException when getting from an invalid negative index.
 	 */
 	@Test
@@ -614,7 +614,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#isEmpty()}
+	 * {@link implementations.MyDLLt#isEmpty()}
 	 * to return true when list is empty.
 	 */
 	@Test
@@ -627,7 +627,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#isEmpty()}
+	 * {@link implementations.MyDLLt#isEmpty()}
 	 * to return false when list is not empty.
 	 */
 	@Test
@@ -641,7 +641,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#iterator()}
+	 * {@link implementations.MyDLLt#iterator()}
 	 * to get an iterator for an empty list.
 	 */
 	@Test
@@ -665,7 +665,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#iterator()}
+	 * {@link implementations.MyDLLt#iterator()}
 	 * to get an iterator items in a list with multiple items.
 	 */
 	@Test
@@ -697,7 +697,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to remove the only item in the list.
 	 */
 	@Test
@@ -717,7 +717,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to remove the item at the head of the list.
 	 */
 	@Test
@@ -744,7 +744,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to remove the item at the tail of the list.
 	 */
 	@Test
@@ -773,7 +773,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to remove the item at neither head nor tail of the list.
 	 */
 	@Test
@@ -806,7 +806,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to throw an IndexOutOfBoundsException on an empty list.
 	 */
 	@Test
@@ -825,7 +825,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to throw an IndexOutOfBoundsException on a list with multiple items.
 	 */
 	@Test
@@ -849,7 +849,7 @@ public class ArrayListTest
 	
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to throw an IndexOutOfBoundsException on a list with multiple items.
 	 */
 	@Test
@@ -873,7 +873,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(E)}
+	 * {@link implementations.MyDLLt#remove(E)}
 	 * to remove from a list with only one item.
 	 */
 	@Test
@@ -891,7 +891,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to remove a found item from a list with multiple items.
 	 */
 	@Test
@@ -901,15 +901,42 @@ public class ArrayListTest
 		myList.add( two );
 		myList.add( three );
 		myList.add( four );
+		myList.add( five );
 
-		int expected1 = 1;
-		int actual1 = myList.remove( one );
+		int expected1 = five;
+		int actual1 = myList.remove( five );
 
-		int expected2 = 2;
-		int actual2 = myList.get( 0 );
+		int expected2 = 4;
+		int actual2 = myList.get( 3 );
 
-		int expectedSize = 3;
+		int expectedSize = 4;
 		int actualSize = myList.size();
+		
+		assertEquals( "Failed to remove the correct item.", expected1, actual1 );
+		assertEquals( "Failed to remove the correct item.", expected2, actual2 );
+		assertEquals( "Size was not updated correctly.", expectedSize, actualSize );
+		
+		expected1 = 1;
+		actual1 = myList.remove( one );
+
+		expected2 = 2;
+		actual2 = myList.get( 0 );
+
+		expectedSize = 3;
+		actualSize = myList.size();
+		
+		assertEquals( "Failed to remove the correct item.", expected1, actual1 );
+		assertEquals( "Failed to remove the correct item.", expected2, actual2 );
+		assertEquals( "Size was not updated correctly.", expectedSize, actualSize );
+		
+		expected1 = 3;
+		actual1 = myList.remove( three );
+
+		expected2 = 4;
+		actual2 = myList.get( 1 );
+
+		expectedSize = 2;
+		actualSize = myList.size();
 		
 		assertEquals( "Failed to remove the correct item.", expected1, actual1 );
 		assertEquals( "Failed to remove the correct item.", expected2, actual2 );
@@ -918,7 +945,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(int)}
+	 * {@link implementations.MyDLLt#remove(int)}
 	 * to remove a not found item.
 	 */
 	@Test
@@ -941,7 +968,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#remove(E)}
+	 * {@link implementations.MyDLLt#remove(E)}
 	 * to throw a NullPointerException when removing a null object from the list.
 	 */
 	@Test
@@ -967,7 +994,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#set(int, E)}
+	 * {@link implementations.MyDLLt#set(int, E)}
 	 * to set the item at neither head nor tail position in the list to a new item.
 	 */
 	@Test
@@ -993,7 +1020,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#set(int, E)}
+	 * {@link implementations.MyDLLt#set(int, E)}
 	 * to set the item at the head of the list to a new item.
 	 */
 	@Test
@@ -1017,7 +1044,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#set(int, E)}
+	 * {@link implementations.MyDLLt#set(int, E)}
 	 * to set the item at tail of the list to a new item.
 	 */
 	@Test
@@ -1043,7 +1070,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#set(int, E)}
+	 * {@link implementations.MyDLLt#set(int, E)}
 	 * to throw a NullPointerException when a null is passed for the item to set.
 	 */
 	@Test
@@ -1068,7 +1095,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#set(int, E)}
+	 * {@link implementations.MyDLLt#set(int, E)}
 	 * to throw an IndexOutOfBoundsException on an empty list.
 	 */
 	@Test
@@ -1089,7 +1116,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#set(int, E)}
+	 * {@link implementations.MyDLLt#set(int, E)}
 	 * to throw IndexOutOfBoundsException on a positive invalid index.
 	 */
 	@Test
@@ -1114,7 +1141,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#set(int, E)}
+	 * {@link implementations.MyDLLt#set(int, E)}
 	 * to throw IndexOutOfBoundsException on a negative invalid index.
 	 */
 	@Test
@@ -1138,7 +1165,7 @@ public class ArrayListTest
 	}
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#size()}
+	 * {@link implementations.MyDLLt#size()}
 	 * to return size of an empty list.
 	 */
 	@Test
@@ -1150,7 +1177,7 @@ public class ArrayListTest
 	}
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#size()}
+	 * {@link implementations.MyDLLt#size()}
 	 * to return size of a list after adding one item.
 	 */
 	@Test
@@ -1165,7 +1192,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#size()}
+	 * {@link implementations.MyDLLt#size()}
 	 * to return size of a list after adding multiple items.
 	 */
 	@Test
@@ -1184,7 +1211,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#size()}
+	 * {@link implementations.MyDLLt#size()}
 	 * to return the size of a list after removing the only item.
 	 */
 	@Test
@@ -1199,7 +1226,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#size()}
+	 * {@link implementations.MyDLLt#size()}
 	 * to return the size of a list after removing a few items.
 	 */
 	@Test
@@ -1220,8 +1247,8 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#toArray(T[])}
-	 * to return an array containing all items of the list when the list has sufficient length.
+	 * {@link implementations.MyDLLt#toArray(T[])}
+	 * to return an array containing all items of the list when the array passed has sufficient length.
 	 */
 	@Test
 	public void testToArrayEArray_Sufficient()
@@ -1241,8 +1268,8 @@ public class ArrayListTest
 	
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#toArray(T[])}
-	 * to return an array containing all items of the list when the list has insufficient length.
+	 * {@link implementations.MyDLLt#toArray(T[])}
+	 * to return an array containing all items of the list when the array passed has insufficient length.
 	 */
 	@Test
 	public void testToArrayEArray_Insufficient()
@@ -1262,7 +1289,7 @@ public class ArrayListTest
 
 	/**
 	 * Test method for
-	 * {@link implementations.MyArrayList#toArray(T[])}
+	 * {@link implementations.MyDLLt#toArray(T[])}
 	 * to throw a NullPointerException when a null is passed.
 	 */
 	@Test
@@ -1282,7 +1309,7 @@ public class ArrayListTest
 	
 	/**
 	 * Test method for 
-	 * {@link implementations.MyArrayList#toArray()}
+	 * {@link implementations.MyDLLt#toArray()}
 	 * to return an Object array containing all items in the list.
 	 */
 	@Test
