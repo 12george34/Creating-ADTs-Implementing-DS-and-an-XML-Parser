@@ -9,7 +9,7 @@ package utilities;
 public interface StackADT<E> {
 
 	
-	clear();
+
 	
 	/**
 	 * Inserts element to top of the stack
