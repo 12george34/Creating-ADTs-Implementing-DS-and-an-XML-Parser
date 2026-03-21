@@ -1,5 +1,7 @@
 
 package utilities;
+
+
 /**
  * Code for linear last-in-first-out data structure. All implementors required to implement all methods of the stack
  * 
@@ -8,6 +10,13 @@ package utilities;
  */
 public interface StackADT<E> {
 
+	
+	/**
+	 * Constructor method to create a new stack object.
+	 * 
+	 * @param size. sets maximum size for the stack
+	 */
+	public void createStack(int size);
 	
 	/**
 	 * The size method will return the current element count contained in the list.

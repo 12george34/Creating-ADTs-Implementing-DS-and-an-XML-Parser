@@ -7,6 +7,12 @@ package utilities;
  */
 public interface QueueADT<E> {
 	
+	/**
+	 * Constructor method to create a new stack object.
+	 * 
+	 * @param size. sets maximum size for the stack
+	 */
+	public void createQueue(int size);
 	
 	/**
 	 * The size method will return the current element count contained in the queue.
