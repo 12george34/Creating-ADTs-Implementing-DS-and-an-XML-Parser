@@ -8,6 +8,20 @@ package utilities;
  */
 public interface StackADT<E> {
 
+	
+	/**
+	 * The size method will return the current element count contained in the list.
+	 * 
+	 * @return The current element count.
+	 */
+	public int size();
+	
+	/**
+	 * Removes all of the elements from this stack. This list will be empty after
+	 * this call returns.
+	 */
+	public void clear();
+	
 	/**
 	 * Inserts element to top of the stack
 	 * 
