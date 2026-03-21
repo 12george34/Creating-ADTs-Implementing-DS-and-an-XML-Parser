@@ -9,7 +9,18 @@ package utilities;
 public interface StackADT<E> {
 
 	
-
+	/**
+	 * The size method will return the current element count contained in the list.
+	 * 
+	 * @return The current element count.
+	 */
+	public int size();
+	
+	/**
+	 * Removes all of the elements from this stack. This list will be empty after
+	 * this call returns.
+	 */
+	public void clear();
 	
 	/**
 	 * Inserts element to top of the stack
@@ -31,5 +42,19 @@ public interface StackADT<E> {
 	 * @return returns the top element of the stack. 
 	 */
 	public E peek();
+	
+	/**
+	 * 
+	 * @param stack2 stack to compare to current stack
+	 * @return returns true if both stacks are equal. False if either stack have a difference
+	 */
+	public boolean equals(StackADT<? extends E> stack2);
+	
+	/**
+	 * Returns true if this list contains no elements. False if it contains elements
+	 * 
+	 * @return true if this list contains no elements. False if it contains elements
+	 */
+	public boolean isEmpty();
 	
 }
