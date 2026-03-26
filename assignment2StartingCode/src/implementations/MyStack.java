@@ -80,15 +80,14 @@ public class MyStack<E> implements StackADT<E> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return stack.toArray();
 	}
 
 	@Override
 	public E[] toArray(E[] holder) throws NullPointerException {
 		if(holder == null) throw new NullPointerException();
-		// TODO Auto-generated method stub
-		return null;
+		return stack.toArray(holder);
 	}
 
 	@Override
@@ -125,8 +124,26 @@ public class MyStack<E> implements StackADT<E> {
 
 	@Override
 	public boolean equals(StackADT<E> that) {
-		// TODO Auto-generated method stub
-		return false;
+		// create a copy of that. this will allow for that elements to be popped without changing that directly
+		StackADT<E> thatCopy = that;
+		//first check is if size of both stacks is equal. If they are not, return false
+		if(that.size() != size)
+		{
+			return false;
+		}
+		else
+		{
+			for(int i = 0; i < size; i++)
+			{
+				//if stack.get() at index does not equal the popped value of thatCopy, return false
+				if(stack.get(i) != thatCopy.pop())
+				{
+					return false;
+				}
+			}	
+		}
+		//all checks past, stacks are equal. Return true
+		return true;
 	}
 
 	
