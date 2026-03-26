@@ -9,12 +9,22 @@ import utilities.StackADT;
 
 public class MyStack<E> implements StackADT<E> {
 
+	private static final int DEFAULT_CAPACITY = 10;
+	private int capacity;
 	private MyArrayList<E> stack;
 	private int size;
 	
+	//constructor for stack of unlimited size
 	public MyStack() {
 		stack = new MyArrayList<E>();
 		size = 0;
+	}
+	
+	//constructor for stack of set capacity
+	public MyStack(int capacity) {
+		stack = new MyArrayList<E>();
+		size = 0;
+		this.capacity = capacity;
 	}
 	@Override
 	public void push(E toAdd) throws NullPointerException {
@@ -158,7 +168,13 @@ public class MyStack<E> implements StackADT<E> {
 
 	@Override
 	public boolean stackOverflow() {
-		// TODO Auto-generated method stub
-		return false;
+		if(size == capacity)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
