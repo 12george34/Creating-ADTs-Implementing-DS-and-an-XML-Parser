@@ -1,15 +1,15 @@
 package implementations;
 
-import java.util.Arrays;
+
 import java.util.EmptyStackException;
-import java.util.NoSuchElementException;
+
 
 import utilities.Iterator;
 import utilities.StackADT;
 
 public class MyStack<E> implements StackADT<E> {
 
-	private static final int DEFAULT_CAPACITY = 10;
+
 	private int capacity;
 	private MyArrayList<E> stack;
 	private int size;
@@ -18,6 +18,8 @@ public class MyStack<E> implements StackADT<E> {
 	public MyStack() {
 		stack = new MyArrayList<E>();
 		size = 0;
+		//set capacity to -1 for stackOverflow check
+		capacity = -1;
 	}
 	
 	//constructor for stack of set capacity
@@ -29,18 +31,16 @@ public class MyStack<E> implements StackADT<E> {
 	@Override
 	public void push(E toAdd) throws NullPointerException {
 		if(toAdd == null) throw new NullPointerException();
+		//stack currently has no elements, add to stack
 		if(size == 0)
 		{
 			stack.add(toAdd);
 			size++;
 		}
+		//stack currently has no elements, add to stack at index 0
 		else
 		{
-			
-			//set current top element of stack to placeholder1
-			E swapHolder1 = stack.get(0);	
 			stack.add(0, toAdd);
-
 			size++;
 		}
 		
@@ -126,10 +126,11 @@ public class MyStack<E> implements StackADT<E> {
 		return -1;
 	}
 
+	
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return stack.iterator();
 	}
 
 	@Override
