@@ -1,15 +1,15 @@
 package utilities;
 
 import implementations.*;
-
+import exceptions.EmptyQueueException;
 
 public class ParseData {
 
-	//two tag stacks meant to work in tandem. One produces the specific xml tag, the other the line the xml tag occurred on
+	// two tag stacks meant to work in tandem. One produces the specific xml tag, the other the line the xml tag occurred on
 	MyStack<String> tagStack;
 	MyStack<Integer> tagStackLine;
 	
-	//getters for stacks and queues
+	// getters for stacks
 	public MyStack<String> getTagStack() {
 		return tagStack;
 	}
@@ -18,88 +18,186 @@ public class ParseData {
 		return tagStackLine;
 	}
 
-	
-	//two tag queues meant to work in tandem. One produces the specific xml tag, the other the line the xml tag occurred on
-	//MyQueue<String> errorQueue;
-	//MyQueue<Integer> errorQueueLine;
+	// queues used to track errors and unmatched tags
+	MyQueue<String> errorQueue;
+	MyQueue<Integer> errorQueueLine;
+
+	// queue used to store extra closing tags that do not match anything
+	MyQueue<String> extrasQueue;
+	MyQueue<Integer> extrasQueueLine;
 	
 	/**
-	 * 
-	 * @param closingTagToCheck the closing tag being checked against top of stack including </ and > in the tag
-	 * @return true if closing tag and opening tag match details. 
+	 * Checks if closing tag matches the opening tag at top of stack
 	 */
 	public boolean topStackMatch(String closingTagToCheck)
 	{
 		String openingTagToCheck = tagStack.peek();
-		//first check is to verify the lengths of both tags to be similar
-		//since opening tag can contain additional info, it must be greater or equal to closing tag
-		//this is done to avoid scenario where length of closing is out of bound for length of opening
 		
 		if(closingTagToCheck.length()-1 <= openingTagToCheck.length())
 		{
-			//removing </ and > from tagToCheck
 			closingTagToCheck = closingTagToCheck.substring(2, closingTagToCheck.length()-1);
 			openingTagToCheck = openingTagToCheck.substring(1,closingTagToCheck.length()+1);
-			// test print
-			// System.out.println(closingTagToCheck + " " + openingTagToCheck);
 		}
 		
-		if(closingTagToCheck.equals(openingTagToCheck))
-		{
-			return true;
-		}
-		else 
-		{
+		return closingTagToCheck.equals(openingTagToCheck);
+	}
+
+	// checks if closing tag matches the front of error queue
+	public boolean errorQueueHeadMatch(String tag)
+	{
+		try {
+			String front = errorQueue.peek();
+			tag = tag.substring(2, tag.length()-1);
+			front = front.substring(1, tag.length()+1);
+			return tag.equals(front);
+		} catch (EmptyQueueException e) {
 			return false;
 		}
 	}
+
+	// checks if matching opening tag exists somewhere in stack
+	public boolean stackContainsMatch(String tag)
+	{
+		Object[] arr = tagStack.toArray();
+
+		for(Object obj : arr)
+		{
+			String opening = (String)obj;
+			String cleanClose = tag.substring(2, tag.length()-1);
+			String cleanOpen = opening.substring(1, cleanClose.length()+1);
+
+			if(cleanClose.equals(cleanOpen))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public ParseData(MyArrayList<String> data) {
-		//set tagStack and tagStackLine
+
+		// initialize stacks
 		tagStack = new MyStack<String>();
 		tagStackLine = new MyStack<Integer>();
-		//int used to track when in a string the tag begins. set to -1 as default
+
+		// initialize queues
+		errorQueue = new MyQueue<String>();
+		errorQueueLine = new MyQueue<Integer>();
+		extrasQueue = new MyQueue<String>();
+		extrasQueueLine = new MyQueue<Integer>();
+
 		int tagStart = -1;
-		//tagFlag marks that the beginning of a tag has been found and thus, the tag needs to be recorded. default is 0
 		int tagFlag = 0;
 		
 		for(int i = 0; i < data.size(); i++)
 		{
 			String line = data.get(i);
+
 			for(int j = 0; j < line.length(); j++)
 			{
-				//check if < which indicates beginning of tag
+				// detect start of tag
 				if(line.charAt(j) == '<')
 				{
-					//tagStart is set to current j index. tagFlag is raised
 					tagStart = j;
 					tagFlag = 1;
 				}
 
-				//check if > is found, denoting the end of a tag. If > is found and tagFlag is raised, then the tag has been completed
-				//also checks if the char before > is /. If tag ends with />, it is self closing and can be ignored
-				//also checks if char after < is a ?. Can ignore tags in the format: <?xml somedata=”data”?>
+				// detect end of tag
 				else if(line.charAt(j) == '>' && tagFlag == 1 && line.charAt(j-1) != '/' && line.charAt(tagStart+1) != '?')
 				{
-					//check if the start of the tag indicates a closing tag by looking for </ in first two characters
-					if(line.substring(tagStart, tagStart+2).equals("</")  && topStackMatch(line.substring(tagStart, j+1)))
+					String currentTag = line.substring(tagStart, j+1);
+
+					// handling closing tag
+					if(currentTag.substring(0,2).equals("</"))
 					{
-						topStackMatch(line.substring(tagStart, j+1));
-						tagStackLine.pop();
-						tagStack.pop();
+						// case 1: matches top of stack → valid
+						if(!tagStack.isEmpty() && topStackMatch(currentTag))
+						{
+							tagStackLine.pop();
+							tagStack.pop();
+						}
+
+						// case 2: matches front of error queue → remove previous error
+						else if(errorQueueHeadMatch(currentTag))
+						{
+							try {
+								errorQueueLine.dequeue();
+								errorQueue.dequeue();
+							} catch (EmptyQueueException e) {}
+						}
+
+						// case 3: stack empty → no opening tag exists
+						else if(tagStack.isEmpty())
+						{
+							errorQueueLine.enqueue(i+1);
+							errorQueue.enqueue(currentTag);
+						}
+
+						// case 4: matching opening tag exists deeper in stack
+						else if(stackContainsMatch(currentTag))
+						{
+							// move incorrect tags to error queue until match found
+							while(!tagStack.isEmpty() && !topStackMatch(currentTag))
+							{
+								errorQueueLine.enqueue(tagStackLine.pop());
+								errorQueue.enqueue(tagStack.pop());
+							}
+
+							// remove matching pair
+							tagStackLine.pop();
+							tagStack.pop();
+						}
+
+						// case 5: completely unmatched closing tag
+						else
+						{
+							extrasQueueLine.enqueue(i+1);
+							extrasQueue.enqueue(currentTag);
+						}
 					}
-					//tag is considered an opening tag, push to stack
-					else 
+
+					// handling opening tag
+					else
 					{
-						//first, record the line where tag was found. this is i index + 1
 						tagStackLine.push(i+1);
-						//second, record the tag in its completion. tag begins at tagStart and ends at index j+1
-						tagStack.push(line.substring(tagStart, j+1));
-						//reset tagStart and tagFlag
-						tagStart = -1;
-						tagFlag = 0;
+						tagStack.push(currentTag);
 					}
+
+					tagStart = -1;
+					tagFlag = 0;
 				}
 			}
 		}
+
+		// process remaining errors and extras
+		while(!errorQueue.isEmpty())
+		{
+			// if no extra tags, print all errors
+			if(extrasQueue.isEmpty())
+			{
+				try {
+					System.out.println("Error at line " + errorQueueLine.dequeue() + ": " + errorQueue.dequeue());
+				} catch (EmptyQueueException e) {}
+			}
+			else
+			{
+				try {
+					String errorTag = errorQueue.peek();
+					String extraTag = extrasQueue.peek();
+
+					// if extra tag resolves an error, remove both
+					if(errorQueueHeadMatch(extraTag))
+					{
+						errorQueueLine.dequeue();
+						errorQueue.dequeue();
+						extrasQueueLine.dequeue();
+						extrasQueue.dequeue();
+					}
+					else
+					{
+						System.out.println("Error at line " + errorQueueLine.dequeue() + ": " + errorQueue.dequeue());
+					}
+				} catch (EmptyQueueException e) {}
+			}
+		}
 	}
-}
