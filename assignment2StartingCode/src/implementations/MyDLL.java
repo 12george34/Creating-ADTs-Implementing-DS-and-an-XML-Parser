@@ -53,7 +53,7 @@ public class MyDLL<E> implements ListADT<E> {
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
 		if(toAdd == null) throw new NullPointerException();
-		if(index < 0) throw new IndexOutOfBoundsException();
+		if(index < 0 || index > size) throw new IndexOutOfBoundsException();
 		
 		MyDLLNode<E> newNode = new MyDLLNode<>(toAdd);
 		
