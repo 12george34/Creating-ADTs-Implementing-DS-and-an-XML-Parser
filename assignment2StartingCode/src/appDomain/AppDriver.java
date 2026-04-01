@@ -28,7 +28,5 @@ public class AppDriver
 		}
 		MyArrayList<String> data = LoadData.loadData(fileName);
 		new ParseData(data);
-
-
 	}
 }
