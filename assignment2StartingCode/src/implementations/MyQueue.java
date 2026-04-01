@@ -4,6 +4,11 @@ import exceptions.EmptyQueueException;
 import utilities.Iterator;
 import utilities.QueueADT;
 
+/**
+ * This class implements a queue using a doubly linked list.
+ *
+ * @param <E> the type of elements stored in the queue
+ */
 public class MyQueue<E> implements QueueADT<E>{
 	
 	private MyDLL<E> queue;
@@ -13,8 +18,10 @@ public class MyQueue<E> implements QueueADT<E>{
 	}
 	
 	
-	
 
+	/**
+	 * Adds an element to the end of the queue (FIFO).
+	 */
 	@Override
 	public void enqueue(E toAdd) throws NullPointerException {
 		if(toAdd == null) throw new NullPointerException();
@@ -22,12 +29,18 @@ public class MyQueue<E> implements QueueADT<E>{
 		
 	}
 
+	/**
+	 * Removes and returns the front element of the queue.
+	 */
 	@Override
 	public E dequeue() throws EmptyQueueException {
 		if(isEmpty()) throw new EmptyQueueException("Queue is empty");
 		return queue.remove(0);
 	}
 
+	/**
+	 * Returns the front element without removing it.
+	 */
 	@Override
 	public E peek() throws EmptyQueueException {
 		if(isEmpty()) throw new EmptyQueueException("Nothing in Queue");
@@ -50,6 +63,9 @@ public class MyQueue<E> implements QueueADT<E>{
 		return queue.contains(toFind);
 	}
 
+	/**
+	 * Returns the position of the element in the queue (1-based index).
+	 */
 	@Override
 	public int search(E toFind) {
 		Iterator<E> it = queue.iterator();
