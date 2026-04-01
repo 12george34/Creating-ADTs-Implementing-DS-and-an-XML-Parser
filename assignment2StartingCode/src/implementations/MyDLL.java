@@ -6,6 +6,11 @@ import java.util.NoSuchElementException;
 import utilities.Iterator;
 import utilities.ListADT;
 
+/**
+ * This class implements a doubly linked list.
+ *
+ * @param <E> the type of elements stored in the list
+ */
 public class MyDLL<E> implements ListADT<E> {
 	
 	
@@ -21,7 +26,9 @@ public class MyDLL<E> implements ListADT<E> {
 		size = 0;
 	}
 	
-	
+	/**
+	 * Finds and returns the node at the given index.
+	 */
 	private MyDLLNode<E> getNode(int index){
 		MyDLLNode<E> current;
 		if(index < size / 2) {
@@ -70,6 +77,7 @@ public class MyDLL<E> implements ListADT<E> {
 			tail = newNode;
 		} else {
 			MyDLLNode<E> current = getNode(index);
+			// Insert the new node between two existing nodes
 			newNode.next = current;
 			newNode.prev = current.prev;
 			current.prev.next = newNode;
@@ -126,6 +134,7 @@ public class MyDLL<E> implements ListADT<E> {
 			tail = tail.prev;
 			tail.next = null;
 		} else {
+			// Reconnect the previous and next nodes
 			toRemove.prev.next = toRemove.next;
 			toRemove.next.prev = toRemove.prev;
 		}
