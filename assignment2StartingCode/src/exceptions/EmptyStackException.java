@@ -1,5 +1,6 @@
 package exceptions;
 
+@SuppressWarnings("serial")
 public class EmptyStackException extends Exception {
 
 	public EmptyStackException() {
@@ -9,5 +10,4 @@ public class EmptyStackException extends Exception {
 	public EmptyStackException(String message) {
 		super(message);
 	}
-
 }
