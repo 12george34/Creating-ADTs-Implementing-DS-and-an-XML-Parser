@@ -1,13 +1,13 @@
 package appDomain;
 
 import implementations.MyArrayList;
-import implementations.MyStack;
 import utilities.*;
 
 public class AppDriver
 {
 	/**
-	 *  The main method is the entry point of the application.
+	 *  The main method is the entry point of the application. Loads file name from command line args.
+	 *  loads data into an MyArrayList then parses data through ParseData constructor
 	 *  
 	 *  @param args The input to control the execution of the application.
 	 */
@@ -16,21 +16,19 @@ public class AppDriver
 		String fileName = "";
 		
 		//setting file name for test
-		fileName = "res/sample1.xml";
-		MyArrayList<String> data = LoadData.loadData(fileName);
-		ParseData parseXML = new ParseData(data);
+		//fileName = "res/sample2.xml";
 		
-		//test print
-		MyStack<String> tagStack = parseXML.getTagStack();
-		MyStack<Integer> tagStackLine = parseXML.getTagStackLine();
-		int totalSize = tagStack.size();
-		System.out.println("Size: "+tagStack.size());
-		for(int i = 0; i < totalSize; i++)
+		//scans command line args for one ending with .xml which indicates the file name
+		for(String arg: args)
 		{
-			// System.out.println("Size: "+tagStack.size());
-			System.out.println("Line #: "+tagStackLine.pop() + " tag: " + tagStack.pop());
-			// System.out.println("Index: " + i);
+			if(arg.toLowerCase().endsWith(".xml"))
+			{
+				fileName = arg;
+			}
 		}
+		MyArrayList<String> data = LoadData.loadData(fileName);
+		new ParseData(data);
+
 
 	}
 }
