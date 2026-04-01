@@ -72,9 +72,9 @@ public class MyQueue<E> implements QueueADT<E>{
 		Iterator<E> thisIt = this.iterator();
 		Iterator<E> thatIt = that.iterator();
 		while(thisIt.hasNext()) {
-			if(!thisIt.next().equals(thisIt.next())) return false;
+			if(!thisIt.next().equals(thatIt.next())) return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
