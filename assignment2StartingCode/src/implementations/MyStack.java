@@ -6,15 +6,26 @@ import java.util.EmptyStackException;
 
 import utilities.Iterator;
 import utilities.StackADT;
-
+/**
+* implements StackADT to creature a first in first out list of data. 
+* Utilizes an instance of MyArrayList to generate the list
+*/
 public class MyStack<E> implements StackADT<E> {
 
-
+	// set variables. 
+	// capacity is maximum capacity of whole stack
 	private int capacity;
+	//instance of MyArrayList
 	private MyArrayList<E> stack;
+	//size is current size of active elements within stack. Must be less than or equal to capacity
 	private int size;
 	
-	//constructor for stack of unlimited size
+
+	/**
+	*
+	*intializes stack as new MyArrayList and sets size to zero. capacity considered unlimited, set to -1 to represent that for stackOverflow check
+	*
+	*/
 	public MyStack() {
 		stack = new MyArrayList<E>();
 		size = 0;
@@ -22,12 +33,24 @@ public class MyStack<E> implements StackADT<E> {
 		capacity = -1;
 	}
 	
-	//constructor for stack of set capacity
+	/**
+	*
+	* intializes stack as new MyArrayList and sets size to zero. capacity set to default given
+	*
+	* @param capacity the maximum capacity to be set for the stack
+	*/
 	public MyStack(int capacity) {
 		stack = new MyArrayList<E>();
 		size = 0;
 		this.capacity = capacity;
 	}
+	/**
+	*
+	* implements push method of StackADT
+	* utilizes underlying methods of MyArrayList to add to the stack.
+	*
+	* @param toAdd element to be added to stack
+	*/
 	@Override
 	public void push(E toAdd) throws NullPointerException {
 		if(toAdd == null) throw new NullPointerException();
@@ -45,7 +68,14 @@ public class MyStack<E> implements StackADT<E> {
 		}
 		
 	}
-
+	/**
+	*
+	* implements pop method of StackADT
+	* utilizes underlying methods of MyArrayList to remove the element from the stack
+	* element is removed from the stack, size is reduced to reflect updated stack and element removed is returned
+	*
+	* @return returns the top element of the stack while removing it from the stack
+	*/
 	@Override
 	public E pop() throws EmptyStackException {
 		// check if stack is empty. Throw exception if true
@@ -60,6 +90,14 @@ public class MyStack<E> implements StackADT<E> {
 		}
 	}
 
+	/**
+	*
+	* implements pop method of StackADT
+	* utilizes underlying methods of MyArrayList to get the element from the stack
+	* element is left on the top of the stack, size remains the same, element returned
+	*
+	* @return returns the top element of the stack
+	*/
 	@Override
 	public E peek() throws EmptyStackException {
 		// check if stack is empty. Throw exception if true
@@ -74,6 +112,13 @@ public class MyStack<E> implements StackADT<E> {
 		}
 	}
 
+	/**
+	*
+	* implements clear method of StackADT
+	* utilizes underlying methods of MyArrayList to get clear the stack
+	* stack is cleared, size is reset to 0. capacity remains the same as initialy set (if applicable)
+	*
+	*/
 	@Override
 	public void clear() {
 		
@@ -81,13 +126,21 @@ public class MyStack<E> implements StackADT<E> {
 		size = 0;
 		
 	}
-
+	
+	/**
+	*
+	* implements isEmpty method of StackADT
+	* utilizes underlying methods of MyArrayList to get verify if stack is empty
+	*
+	* @return returns true if stack is confirmed to be empty
+	*
+	*/
 	@Override
 	public boolean isEmpty() {
 		
 		return stack.isEmpty();
 	}
-
+	
 	@Override
 	public Object[] toArray() {
 
