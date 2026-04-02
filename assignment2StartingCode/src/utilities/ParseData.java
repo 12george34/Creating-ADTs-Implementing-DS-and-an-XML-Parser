@@ -107,6 +107,18 @@ public class ParseData {
 		return false;
 	}
 	// parse and work with stacks and queues
+	/**
+	*
+	* parses the data produced by LoadData.
+	* works to find tags by indentifying tags via "<". Finds type of tag based off elements like "/" found within the tag
+	* compares tags with the stack to see if tags are matched. 
+	* if tags aren't matched, utilizies the errorQueue to store any potential errors.
+	* processes through errorQueue to indentify any tags that have been missed
+	* prints out the errorQueue if there are remaining tags, giving which line the error was found on
+	*
+	* @param data MyArrayList of data generated when loading the data from an xml file
+	*
+	*/
 	public ParseData(MyArrayList<String> data) {
 
 		// initialize stacks
