@@ -65,7 +65,12 @@ public class ParseData {
 		
 	}
 
-	// checks if closing tag matches the front of error queue
+	/**
+	 * Checks if tag matches the opening tag at top of errorQueue after trimming the potential tags with getTag()
+	 *
+	 * @param tag a the tag to be compared to the top of the errorQueue via front
+	 * @return true if tag and front equal each other after they have been trimmed via getTag()
+	 */
 	public boolean errorQueueHeadMatch(String tag)
 	{
 		try {
@@ -79,21 +84,21 @@ public class ParseData {
 	}
 
 	// checks if matching opening tag exists somewhere in stack
+	/**
+	 * checks if matching opening tag exists somewhere in stack by creating an object array of the tagStack and checking the objects against tag
+	 *
+	 * @param tag the tag being compared to the existing tags within the stack
+	 * @return true if any iteration of cleanClose and cleanOpen are equal after they have trimmed via getTag()
+	 */
 	public boolean stackContainsMatch(String tag)
 	{
 		Object[] arr = tagStack.toArray();
-
+	//iterates through the copy of the stack looking for a match
 		for(Object obj : arr)
 		{
 			String opening = (String)obj;
-			String cleanClose = tag.substring(2, tag.length()-1);
-			String cleanOpen = "";
-			//check if lengths of opening and closing tag are similar so the substrings can be compared
-			//without this, throws StringIndexOutOfBoundsException
-			if(cleanClose.length()<opening.length())
-			{
-				cleanOpen = opening.substring(1, cleanClose.length()+1);
-			}
+			String cleanClose = getTag(tag);
+			String cleanOpen = getTag(opening);
 			
 			if(cleanClose.equals(cleanOpen))
 			{
@@ -102,7 +107,7 @@ public class ParseData {
 		}
 		return false;
 	}
-
+	// parse and work with stacks and queues
 	public ParseData(MyArrayList<String> data) {
 
 		// initialize stacks
