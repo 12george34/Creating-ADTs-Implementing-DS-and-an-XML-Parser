@@ -27,7 +27,12 @@ public class ParseData {
 	MyQueue<String> extrasQueue;
 	MyQueue<Integer> extrasQueueLine;
 	
-	//trim strings to find the tag
+	/**
+	* removes <,> and / from tags to produce a clean version for comparison to other tags
+	*
+	* @param tag current tag sent to be trimed, includes <, > or / and potentially other information
+	* @return tag returns trimmed tag. example </b> returns as b
+	*/
 	public String getTag(String tag) 
 	{
 		tag = tag.replace("<", "");
@@ -46,7 +51,10 @@ public class ParseData {
 		return tag;
 	}
 	/**
-	 * Checks if closing tag matches the opening tag at top of stack
+	 * Checks if closing tag matches the opening tag at top of stack after trimming the potential opening and closing tags with getTag()
+	 *
+	 * @param closingTagToCheck a closing tag denotated by the tag beginning with </. To be compared with top of the stack
+	 * @return true if openingTagToCheck and closingTagToCheck equal each other after they have been trimmed via getTag()
 	 */
 	public boolean topStackMatch(String closingTagToCheck) throws EmptyStackException
 	{
