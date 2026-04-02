@@ -159,8 +159,17 @@ public class ParseData {
 								tagStackLine.pop();
 								tagStack.pop();
 							}
-
-							// case 2: matches front of error queue → remove previous error
+							// case 2: current tag is on the same line as top tag on stack and the two tags do not equal
+							// add both top of stack and current tag to errorQueue
+							// catches scenarios like "<b>This is for the Spanish<i> Language that is </b> long ago lost.</i>" where nesting of tags is not correct
+							else if(tagStackLine.peek() == i + 1)
+							{
+								errorQueueLine.enqueue(tagStackLine.pop());
+								errorQueue.enqueue(tagStack.pop());
+								errorQueueLine.enqueue(i+1);
+								errorQueue.enqueue(currentTag);
+							}
+							// case 3: matches front of error queue → remove previous error
 							else if(errorQueueHeadMatch(currentTag))
 							{
 								try {
@@ -169,14 +178,14 @@ public class ParseData {
 								} catch (EmptyQueueException e) {}
 							}
 
-							// case 3: stack empty → no opening tag exists
+							// case 4: stack empty → no opening tag exists
 							else if(tagStack.isEmpty())
 							{
 								errorQueueLine.enqueue(i+1);
 								errorQueue.enqueue(currentTag);
 							}
 
-							// case 4: matching opening tag exists deeper in stack
+							// case 5: matching opening tag exists deeper in stack
 							else if(stackContainsMatch(currentTag))
 							{
 								// move incorrect tags to error queue until match found
@@ -191,7 +200,7 @@ public class ParseData {
 								tagStack.pop();
 							}
 
-							// case 5: completely unmatched closing tag
+							// case 6: completely unmatched closing tag
 							else
 							{
 								extrasQueueLine.enqueue(i+1);
