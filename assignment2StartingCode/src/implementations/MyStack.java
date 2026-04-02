@@ -130,7 +130,7 @@ public class MyStack<E> implements StackADT<E> {
 	/**
 	*
 	* implements isEmpty method of StackADT
-	* utilizes underlying methods of MyArrayList to get verify if stack is empty
+	* utilizes underlying methods of MyArrayList to verify if stack is empty
 	*
 	* @return returns true if stack is confirmed to be empty
 	*
@@ -140,19 +140,45 @@ public class MyStack<E> implements StackADT<E> {
 		
 		return stack.isEmpty();
 	}
-	
+
+	/**
+	*
+	* implements Object[] toArray() method of StackADT
+	* utilizes underlying methods of MyArrayList to produce an array of objects that is a copy of the stack
+	*
+	* @return returns the array copy of the stack
+	*
+	*/
 	@Override
 	public Object[] toArray() {
 
 		return stack.toArray();
 	}
 
+	/**
+	*
+	* implements E[] toArray() method of StackADT
+	* utilizes underlying methods of MyArrayList to produce an array of elements that is a copy of the stack
+	*
+	* @param holder list of elements where the stack copy is to be reproduced and held
+	* @return returns the array copy of the stack
+	*
+	*/
 	@Override
 	public E[] toArray(E[] holder) throws NullPointerException {
 		if(holder == null) throw new NullPointerException();
 		return stack.toArray(holder);
 	}
 
+	/**
+	*
+	* implements contains method of StackADT
+	* utilizes underlying methods of MyArrayList to verify if toFind is contained within the stack
+	*
+	* @param toFind element to be searched for within the stack
+	* @return returns true if toFind was found within the stack
+	*
+	*/
 	@Override
 	public boolean contains(E toFind) throws NullPointerException 
 	{
@@ -167,6 +193,15 @@ public class MyStack<E> implements StackADT<E> {
 		return false;
 	}
 
+	/**
+	*
+	* implements search method of StackADT
+	* utilizes underlying methods of MyArrayList to verify if toFind is contained within the stack and at what index it is first found at
+	*
+	* @param toFind element to be searched for within the stack
+	* @return returns the index of toFind if found in the stack. Returns -1 to denote if toFind was not found in the stack
+	*
+	*/
 	@Override
 	public int search(E toFind) {
 		for(int i = 0; i < size; i++)
@@ -179,13 +214,30 @@ public class MyStack<E> implements StackADT<E> {
 		return -1;
 	}
 
-	
+	/**
+	*
+	* implements Iterator method of StackADT
+	* utilizes underlying iterator subclass of MyArrayList to generator an iterator of the stack
+	*
+	* @return the iterator of the stack
+	*
+	*/
 	@Override
 	public Iterator<E> iterator() {
 		
 		return stack.iterator();
 	}
 
+	/**
+	*
+	* implements equals method of StackADT
+	* utilizes underlying methods of MyArrayList to compare two stacks
+	* checks if sizes of the two stacks are equal. if they are, creates a copy of that stack and compares each element of the copy of that with current stack
+	*
+	* @param that another stack to be compared with the current stack
+	* @return true if both stacks are equal
+	*
+	*/
 	@Override
 	public boolean equals(StackADT<E> that) {
 		// create a copy of that. this will allow for that elements to be popped without changing that directly
@@ -210,16 +262,26 @@ public class MyStack<E> implements StackADT<E> {
 		return true;
 	}
 
-	
-	@Override
 	/**
-	 * returns internal size variable
+	 * implements size method of StackADT
+	 *returns internal size variable
+	 *
+	 * returns size of stack
 	 */
-	public int size() {
+	@Override
+		public int size() {
 		
 		return size;
 	}
 
+	/**
+	*
+	* implements stackOverflow method of StackADT
+	* checks if stack size is the same as the set capacity for stack
+	*
+	* @returns true if size of stack is equal to set capacity of stack. 
+	* for stacks set with unilimited size, capacity has been set to -1 and will not match size which is always 0 or greater
+	*/
 	@Override
 	public boolean stackOverflow() {
 		if(size == capacity)
