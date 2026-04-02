@@ -26,7 +26,9 @@ public class AppDriver
 				fileName = arg;
 			}
 		}
+		//loads data into a MyArryList by using LoadData class method loadData, sending the fileName to be processed
 		MyArrayList<String> data = LoadData.loadData(fileName);
+		//sends data to ParseData class for parsing and processing
 		new ParseData(data);
 	}
 }
