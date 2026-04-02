@@ -83,7 +83,6 @@ public class ParseData {
 		}
 	}
 
-	// checks if matching opening tag exists somewhere in stack
 	/**
 	 * checks if matching opening tag exists somewhere in stack by creating an object array of the tagStack and checking the objects against tag
 	 *
@@ -124,16 +123,20 @@ public class ParseData {
 		int tagStart = -1;
 		//tagFlag to inform when currently processing a tag. Set to 0 to indicate no tag currently in process
 		int tagFlag = 0;
-		
+
+		//loops through data to parse. i represents the current line - 1. For line 1, i is 0
 		for(int i = 0; i < data.size(); i++)
 		{
+			//retrive entire line of data as string
 			String line = data.get(i);
 
+			//parses through the current line on a character by character basis. For char 1, j is 0
 			for(int j = 0; j < line.length(); j++)
 			{
-				// detect start of tag
+				// detect start of tag by finding first instance of "<"
 				if(line.charAt(j) == '<')
 				{
+					//notes the index the tag begins at. tagFlag raised to denote a tag is currently being processed
 					tagStart = j;
 					tagFlag = 1;
 				}
@@ -153,14 +156,11 @@ public class ParseData {
 						{
 							//adjusts the tag to include the addtional '>'
 							currentTag = line.substring(tagStart, j+2);
-							//marks start of tag with e* to indicate an error has been found
+							//marks start of tag with e* to indicate an error has been found. e* will not match future tags, so tag will be processed and printed as an error
 							currentTag = "e*"+currentTag;
 						}
 						
 					}
-
-					//print test for current tag
-					//System.out.println(currentTag);
 					
 					// handling closing tag
 					if(currentTag.substring(0,2).equals("</"))
@@ -237,7 +237,7 @@ public class ParseData {
 						tagStackLine.push(i+1);
 						tagStack.push(currentTag);
 					}
-
+					//resets tagStart and tagFlag is lowered
 					tagStart = -1;
 					tagFlag = 0;
 				}
@@ -274,6 +274,7 @@ public class ParseData {
 						//deals with any tags with the error indicator of 'e*'
 						if(errorTag.substring(0,2).equals("e*"))
 						{
+							//removes 'e*' from tag for print out
 							errorTag = errorTag.substring(2);
 						}
 						System.out.println("Error at line " + errorQueueLine.dequeue() + ": " + errorTag);
