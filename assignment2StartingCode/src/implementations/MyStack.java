@@ -50,6 +50,8 @@ public class MyStack<E> implements StackADT<E> {
 	* utilizes underlying methods of MyArrayList to add to the stack.
 	*
 	* @param toAdd element to be added to stack
+	* @throws NullPointerException when attempting to add a null element to the
+	*                              stack.
 	*/
 	@Override
 	public void push(E toAdd) throws NullPointerException {
@@ -75,6 +77,7 @@ public class MyStack<E> implements StackADT<E> {
 	* element is removed from the stack, size is reduced to reflect updated stack and element removed is returned
 	*
 	* @return returns the top element of the stack while removing it from the stack
+	* @throws EmptyStackException if there are not items in the stack.
 	*/
 	@Override
 	public E pop() throws EmptyStackException {
@@ -97,6 +100,7 @@ public class MyStack<E> implements StackADT<E> {
 	* element is left on the top of the stack, size remains the same, element returned
 	*
 	* @return returns the top element of the stack
+	* @throws EmptyStackException
 	*/
 	@Override
 	public E peek() throws EmptyStackException {
@@ -162,7 +166,8 @@ public class MyStack<E> implements StackADT<E> {
 	*
 	* @param holder list of elements where the stack copy is to be reproduced and held
 	* @return returns the array copy of the stack
-	*
+	* @throws NullPointerException if the specified element is null and this list
+	*                              does not support null elements.
 	*/
 	@Override
 	public E[] toArray(E[] holder) throws NullPointerException {
