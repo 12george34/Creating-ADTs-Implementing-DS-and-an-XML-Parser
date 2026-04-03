@@ -271,7 +271,7 @@ public class MyStack<E> implements StackADT<E> {
 	 * implements size method of StackADT
 	 *returns internal size variable
 	 *
-	 * returns size of stack
+	 * @return size of stack
 	 */
 	@Override
 		public int size() {
