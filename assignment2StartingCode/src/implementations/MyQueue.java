@@ -24,6 +24,8 @@ public class MyQueue<E> implements QueueADT<E>{
 	 * Adds an element to the end of the queue (FIFO).
 	 *
 	 * @param toAdd element to add to queue
+	 * @throws NullPointerException raised when a <code>null</code> object is placed
+	 *                              in the Queue.
 	 */
 	@Override
 	public void enqueue(E toAdd) throws NullPointerException {
@@ -37,6 +39,7 @@ public class MyQueue<E> implements QueueADT<E>{
 	 * removes and returns first element of queue
 	 *
 	 * @return first element of queue
+	 * @throws EmptyQueueException raised when the queue's length is zero (0).
 	 */
 	@Override
 	public E dequeue() throws EmptyQueueException {
@@ -50,6 +53,7 @@ public class MyQueue<E> implements QueueADT<E>{
 	 * Returns the front element without removing it.
 	 *
 	 * @return first element of queue
+	 * @throws EmptyQueueException raised when the queue's length is zero (0).
 	 */
 	@Override
 	public E peek() throws EmptyQueueException {
@@ -72,7 +76,10 @@ public class MyQueue<E> implements QueueADT<E>{
 	 * verifies if queue is empty of elements
 	 *
 	 *
-	 *@return true if queue is empty
+	 * @return true if queue is empty
+	 * @throws NullPointerException
+	 *             if the specified element is null and this list does not
+	 *             support null elements.
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -85,6 +92,9 @@ public class MyQueue<E> implements QueueADT<E>{
 	 *
 	 * @param toFind element to find in queue
 	 * @return true if element is found
+	 * @throws NullPointerException
+	 *             if the specified element is null and this list does not
+	 *  
 	 *
 	 */
 	@Override
@@ -166,6 +176,7 @@ public class MyQueue<E> implements QueueADT<E>{
 	*
 	* @param holder list of elements where the queue copy is to be reproduced and held
 	* @return returns the array copy of the queue
+	* @throws NullPointerException if the specified array is null.
 	*
 	*/
 	@Override
